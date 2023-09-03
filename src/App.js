@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import Home from './components/Home';
+import Contact from './components/Contact';
+import Service from './components/Service';
+import {useState} from 'react';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {ContextApi} from './ContextApi';
+import { Careers } from './components/Careers';
 
 function App() {
+
+const [bgColor, setBgColor] = useState(false);
+
+const changeTheme = () => {
+  setBgColor((state) => {
+    return !state
+  })
+}
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <BrowserRouter>
+      <ContextApi.Provider value={{bgColor, changeTheme}}>
+      <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/contact' element={<Contact  />} />
+          <Route path='/service' element={<Service />} />
+          <Route path='/Careers' element={<Careers/>} />
+        </Routes>
+      </ContextApi.Provider>
+      </BrowserRouter>
+    </>
   );
 }
 
